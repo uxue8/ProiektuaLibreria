@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 public class LiburuaController {
-   @GetMapping({"/liburua/save"})
+   @GetMapping({"/"})
    public String gehituLiburua(){
 	   return "liburuGehitu";
    }
