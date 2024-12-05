@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Libro</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Añadir Nuevo Libro</h1>
+        <form th:action="@{/liburua/save}" method="post">
+            <!-- Izenburua -->
+            <div class="form-group">
+                <label for="izenburua">Título:</label>
+                <input type="text" id="izenburua" name="izenburua" th:value="*{izenburua}" placeholder="Introduce el título" required>
+            </div>
+
+            <!-- Egilea -->
+            <div class="form-group">
+                <label for="egilea">Autor:</label>
+                <input type="text" id="egilea" name="egilea" th:value="*{egilea}" placeholder="Introduce el autor" required>
+            </div>
+
+            <!-- Stock -->
+            <div class="form-group">
+                <label for="stock">Stock:</label>
+                <input type="number" id="stock" name="stock" th:value="*{stock}" placeholder="Cantidad en stock" required>
+            </div>
+
+            <!-- Prezioa -->
+            <div class="form-group">
+                <label for="prezioa">Precio:</label>
+                <input type="number" step="0.01" id="prezioa" name="prezioa" th:value="*{prezioa}" placeholder="Precio" required>
+            </div>
+
+            <!-- Editoriala -->
+            <div class="form-group">
+                <label for="id_editoriala">Editorial:</label>
+                <select id="id_editoriala" name="id_editoriala" th:field="*{id_editoriala}" required>
+                    <option th:each="editoriala : ${editorialak}" th:value="${editoriala.id}" th:text="${editoriala.nombre}">Editorial</option>
+                </select>
+            </div>
+
+            <!-- Botón Guardar -->
+            <button type="submit" class="btn">Guardar Libro</button>
+        </form>
+    </div>
+</body>
+</html>
