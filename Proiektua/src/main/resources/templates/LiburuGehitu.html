@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/liburu-gehitu.css}">
+    <title>Añadir Libro</title>
+</head>
+<body>
+    <h1>Añadir un Nuevo Libro</h1>
+    <form  action="#" th:action="@{/liburuaGehitu/add}" th:object="${liburua}" method="post" enctype="multipart/form-data">
+        <label for="izenburua">Título:</label>
+        <input type="text" id="izenburua" th:field="*{izenburua}" required><br>
+
+        <label for="egilea">Autor:</label>
+        <input type="text" id="egilea" th:field="*{egilea}" required><br>
+
+        <label for="stock">Stock:</label>
+        <input type="number" id="stock" th:field="*{stock}" required><br>
+
+        <label for="id_editoriala">Editorial:</label>
+        <input type="text" id="id_editoriala" th:field="*{id_editoriala}" required><br>
+
+        <label for="prezioa">Precio:</label>
+        <input type="number" id="prezioa" th:field="*{prezioa}" step="0.01" required><br>
+
+        <label for="irudia">Imagen (sube una foto):</label>
+        <input type="file" id="irudia" th:field="*{irudia}" accept="image/*"><br>
+
+        <button type="submit">Añadir Libro</button>
+    </form>
+</body>
+</html>
