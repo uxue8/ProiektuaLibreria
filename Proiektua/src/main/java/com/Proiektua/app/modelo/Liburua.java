@@ -40,25 +40,34 @@ public class Liburua {
 	@ManyToMany
 	private List<Erabiltzaileak> erabiltzailea;
 	
+	@Column 
+	private String irudia;
+	
 	
 	public Liburua() {}
 
 
-	public Liburua(int id, String izenburua, String egilea, int stock, double prezioa) {
 
+
+	
+	public Liburua(int id, String izenburua, String egilea, int stock, Editoriala id_editoriala, double prezioa,
+			String irudia) {
 		this.id = id;
 		this.izenburua = izenburua;
 		this.egilea = egilea;
 		this.stock = stock;
+		this.id_editoriala = id_editoriala;
 		this.prezioa = prezioa;
+		this.irudia = irudia;
 	}
-
-
+	
 	@Override
 	public String toString() {
 		return "Liburua [id=" + id + ", izenburua=" + izenburua + ", egilea=" + egilea + ", stock=" + stock
 				+ ", id_editoriala=" + id_editoriala + ", prezioa=" + prezioa + "]";
 	}
+
+
 	
 	
 	

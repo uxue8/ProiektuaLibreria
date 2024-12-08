@@ -54,6 +54,20 @@ public class Erabiltzaileak {
 			return "Erabiltzaileak [id=" + id + ", izena=" + izena + ", abizena=" + abizena + ", email=" + email
 					+ ", pasahitza=" + pasahitza + ", tel_zenbakia=" + tel_zenbakia + ", helbidea=" + helbidea + "]";
 		}
+
+
+		public Erabiltzaileak(int id, String izena, String abizena, String email, String pasahitza, String tel_zenbakia,
+				Helbidea helbidea, int admin) {
+			super();
+			this.id = id;
+			this.izena = izena;
+			this.abizena = abizena;
+			this.email = email;
+			this.pasahitza = pasahitza;
+			this.tel_zenbakia = tel_zenbakia;
+			this.helbidea = helbidea;
+			this.admin = admin;
+		}
 		
 		
 		
