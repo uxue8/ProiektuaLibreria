@@ -8,53 +8,55 @@
 </head>
 <body>
     <div class="form-container">
-        <h1>Registro de Usuario</h1>
-        <form th:action="@{/erregistro/erregistratu}" th:object="${erabiltzaileak}" method="post">
+		
+        <form th:action="@{/erregistro/erregistratu}" th:object="${erabiltzailea}" method="post">
+			<h4><span th:text="${id} ? 'Edit' : 'Sortu'"></span> erabiltzailea</h4>
+							<input type="text" id="id" hidden="true" th:field="*{id}" />
             <div class="form-group">
                 <label for="izena">Nombre:</label>
-                <input type="text" id="izena" name="izena" th:field="${erabiltzaileak.izena}"required>
+                <input type="text" id="izena" name="izena" th:field="${erabiltzailea.izena}"required>
             </div>
             <div class="form-group">
                 <label for="abizena">Apellido:</label>
-                <input type="text" id="abizena" name="abizena"th:field="${erabiltzaileak.abizena}"required>
+                <input type="text" id="abizena" name="abizena"th:field="${erabiltzailea.abizena}"required>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" th:field="${erabiltzaileak.email}" required>
+                <input type="email" id="email" name="email" th:field="${erabiltzailea.email}" required>
             </div>
             <div class="form-group">
                 <label for="pasahitza">Contraseña:</label>
-                <input type="password" id="pasahitza" name="pasahitza"th:field="${erabiltzaileak.pasahitza}" required>
+                <input type="password" id="pasahitza" name="pasahitza"th:field="${erabiltzailea.pasahitza}" required>
             </div>
             <div class="form-group">
                 <label for="tel_zenbakia">Teléfono:</label>
-                <input type="tel" id="tel_zenbakia" name="tel_zenbakia"th:field="${erabiltzaileak.tel_zenbakia}" required>
+                <input type="tel" id="tel_zenbakia" name="tel_zenbakia"th:field="${erabiltzailea.tel_zenbakia}" required>
             </div>
 			<!-- Campos para la dirección -->
 			          <fieldset>
 			              <legend>Dirección</legend>
 			              <div class="form-group">
 			                  <label for="calle">Calle:</label>
-			                  <input type="text" id="calle" th:field="${erabiltzaileak.helbidea.kalea}" required>
+			                  <input type="text" id="calle" th:field="${erabiltzailea.helbidea.kalea}" required>
 			              </div>
 			              <div class="form-group">
 			                  <label for="ciudad">Ciudad:</label>
-			                  <input type="text" id="ciudad" th:field="${erabiltzaileak.helbidea.hiria}" required>
+			                  <input type="text" id="ciudad" th:field="${erabiltzailea.helbidea.hiria}" required>
 			              </div>
 			              <div class="form-group">
 			                  <label for="codigoPostal">Código Postal:</label>
-			                  <input type="text" id="codigoPostal" th:field="${erabiltzaileak.helbidea.posta_kodea}" required>
+			                  <input type="text" id="codigoPostal" th:field="${erabiltzailea.helbidea.posta_kodea}" required>
 			              </div>
 			          </fieldset>
             <!-- Administrador -->
             <div class="form-group">
                 <label for="admin">¿Es administrador?</label>
                 <select id="admin" name="admin">
-                    <option value="0" th:field="${erabiltzaileak.admin}">No</option>
-                    <option value="1" th:field="${erabiltzaileak.admin}">Sí</option>
+                    <option value="0" th:field="${erabiltzailea.admin}">No</option>
+                    <option value="1" th:field="${erabiltzailea.admin}">Sí</option>
                 </select>
             </div>
-            <button  type="submit">Registrar</button>
+            <button  type="submit"><span th:text="${id} ? 'Edit' : 'Registratu'"></span> </button>
         </form>
     </div>
 </body>

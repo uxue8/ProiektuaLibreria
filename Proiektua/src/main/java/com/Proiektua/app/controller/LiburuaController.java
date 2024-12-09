@@ -3,6 +3,7 @@ package com.Proiektua.app.controller;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,43 +14,52 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Proiektua.app.modelo.Editoriala;
 import com.Proiektua.app.modelo.Liburua;
+import com.Proiektua.app.repository.EditorialaRepository;
 import com.Proiektua.app.repository.LiburuaRepository;
 
 
 
 @Controller
 public class LiburuaController {
-	private static final String UPLOAD_DIR = null;
+
 	@Autowired
 	private LiburuaRepository libuRepo;
+	
+	@Autowired
+	private EditorialaRepository ediRepo;
+	
    @GetMapping("/liburuaGehitu")
    public String LiburuaForm(Model model){
+	   List<Editoriala> editoriales = ediRepo.findAll();
+	    model.addAttribute("editoriales", editoriales);
 	   model.addAttribute("liburua", new Liburua());
 	   return "LiburuGehitu";
    }
    
    @PostMapping("/liburuaGehitu/add")
-   public String gehitu(@ModelAttribute Liburua liburua,@RequestParam("irudia") MultipartFile imagen) {
+   public String gehitu(@ModelAttribute("liburua") Liburua liburua,@RequestParam("irudia") MultipartFile archivo) {
 	   
-	   System.out.println("Formulario recibido!");
-	   if (!imagen.isEmpty()) {
-           try {
-               // Crear el archivo en el directorio de carga
-               String fileName = imagen.getOriginalFilename();
-               Path filePath = Paths.get(UPLOAD_DIR, fileName);
-               imagen.transferTo(filePath.toFile());
-               
-               // Guardar la ruta del archivo en la entidad
-               liburua.setIrudia(filePath.toString());
-           } catch (IOException e) {
-               e.printStackTrace();
-               return "error"; // Si ocurre un error al subir la imagen
+	   
+	   try {
+           if (!archivo.isEmpty()) {
+               // Convertir el archivo MultipartFile a byte[]
+               liburua.setIrudia(archivo.getBytes());  // Guardamos la imagen en el campo 'irudia' como un byte array
            }
-       }
 
-	   libuRepo.save(liburua);
-       return "redirect:/liburuaGehitu";
-   }
+           // Guardar el libro
+           libuRepo.save(liburua);
+
+           return "redirect:/liburuaGehitu"; // O cualquier vista que prefieras
+       } catch (IOException e) {
+           e.printStackTrace();
+           return "error";  // Si ocurre un error, mostramos una página de error
+       }
+  
    
+   }
 }
+
+   
+

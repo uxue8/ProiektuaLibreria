@@ -58,7 +58,7 @@ public class Erabiltzaileak {
 
 		public Erabiltzaileak(int id, String izena, String abizena, String email, String pasahitza, String tel_zenbakia,
 				Helbidea helbidea, int admin) {
-			super();
+	
 			this.id = id;
 			this.izena = izena;
 			this.abizena = abizena;

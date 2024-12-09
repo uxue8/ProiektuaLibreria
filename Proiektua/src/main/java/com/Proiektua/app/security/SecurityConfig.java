@@ -12,17 +12,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    private final UserDetailsServiceImpl userDetailsService;
+   /* private final UserDetailsServiceImpl userDetailsService;
 
     public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
-    }
+    }*/
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/liburuaGehitu/**", "/css/**", "/logina/**", "/erregistro/**").permitAll()
+                .requestMatchers("/liburuaGehitu/**", "/css/**", "/logina/**", "/erregistro/**","/erabiltzaileak/**").permitAll()
                 //Admin 1
                // .requestMatchers("/liburua-gehitu", "/ikusi-salmentak").hasRole("1")
                 //User 0
@@ -43,7 +43,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
+  /*  @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -54,5 +54,5 @@ public class SecurityConfig {
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
-    }
+    }*/
 }

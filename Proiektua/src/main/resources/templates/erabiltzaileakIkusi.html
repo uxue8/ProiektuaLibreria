@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Erabiltzaileak</title>
+    <link rel="stylesheet" href="/css/erabiltzaileak.css">  <!-- Enlazar el CSS -->
+</head>
+<body>
+    <h1>Lista de Erabiltzaileak</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Izena</th>
+                <th>Abizena</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Admin</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="erabiltzailea : ${erabiltzaileak}">
+                <td th:text="${erabiltzailea.id}"></td>
+                <td th:text="${erabiltzailea.izena}"></td>
+                <td th:text="${erabiltzailea.abizena}"></td>
+                <td th:text="${erabiltzailea.email}"></td>
+                <td th:text="${erabiltzailea.tel_zenbakia}"></td>
+                <td th:text="${erabiltzailea.admin}"></td>
+				<td>
+							                <!-- Botón para editar -->
+							                <a th:href="@{/erabiltzaileak/edit/{id}(id=${erabiltzailea.id})}">
+							                    <button>Editar</button>
+							                </a>
+							                <!-- Botón para eliminar -->
+							                <a th:href="@{/erabiltzaileak/delete/{id}(id=${erabiltzailea.id})}">
+							                    <button>Eliminar</button>
+							                </a>
+		       </td>
+            </tr>
+			
+        </tbody>
+    </table>
+</body>
+</html>

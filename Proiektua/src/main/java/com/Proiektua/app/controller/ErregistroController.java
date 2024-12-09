@@ -19,8 +19,8 @@ public class ErregistroController {
 	  @GetMapping("/erregistro")
 	    public String erregistroFormulario(Model model) {
 	        
-	        model.addAttribute("erabiltzaileak", new Erabiltzaileak());
-	        return "erregistro"; 
+	        model.addAttribute("erabiltzailea", new Erabiltzaileak());
+	        return "FormErabiltzaile"; 
 	    }
 	  
 	  @PostMapping("/erregistro/erregistratu")
