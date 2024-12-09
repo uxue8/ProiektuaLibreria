@@ -1,6 +1,7 @@
 package com.Proiektua.app.controller;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -39,17 +40,21 @@ public class LiburuaController {
    }
    
    @PostMapping("/liburuaGehitu/add")
-   public String gehitu(@ModelAttribute("liburua") Liburua liburua,@RequestParam("irudia") MultipartFile archivo) {
+   public String gehitu(@ModelAttribute("liburua") Liburua liburua,@RequestParam("irudia") MultipartFile irudia) {
 	   
 	   
 	   try {
-           if (!archivo.isEmpty()) {
-               // Convertir el archivo MultipartFile a byte[]
-               liburua.setIrudia(archivo.getBytes());  // Guardamos la imagen en el campo 'irudia' como un byte array
+           if (!irudia.isEmpty()) {
+               Path directorioImagen= Paths.get("src//main//resources//static//images");
+               String rutaAbsoluta=directorioImagen.toFile().getAbsolutePath();
+               byte[] bytesImg= irudia.getBytes();
+               Path rutaCompleta = Paths.get(rutaAbsoluta+"//"+irudia.getOriginalFilename());
+               Files.write(rutaCompleta,bytesImg);
+               liburua.setIrudia(irudia.getOriginalFilename());
+               libuRepo.save(liburua);
            }
 
-           // Guardar el libro
-           libuRepo.save(liburua);
+          
 
            return "redirect:/liburuaGehitu"; // O cualquier vista que prefieras
        } catch (IOException e) {

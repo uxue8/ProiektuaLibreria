@@ -1,4 +1,4 @@
-
+<!--
 <div th:fragment="navbar">
 <nav class="navbar">
     <ul>
@@ -7,6 +7,21 @@
         <li th:if="${#authorization.expression('hasRole(''1'')')}"><a href="/liburua-gehitu">Liburua Gehitu</a></li>
         <li th:if="${#authorization.expression('hasRole(''1'')')}"><a href="/ikusi-salmentak">Ikusi Salmentak</a></li>
         <li th:if="${#authorization.expression('hasRole(''0'')')}"><a href="/carrito">Carrito</a></li>
+        <li><a href="/profila">Profila</a></li>
+    </ul>
+</nav>
+</div>
+
+-->
+
+<div th:fragment="navbar">
+<nav class="navbar">
+    <ul>
+        <li><a href="/hasiera">Hasiera</a></li>
+        <li><a href="/liburuak">Liburuak</a></li>
+        <li><a href="/liburua-gehitu">Liburua Gehitu</a></li>
+        <li ><a href="/ikusi-salmentak">Ikusi Salmentak</a></li>
+        <li><a href="/carrito">Carrito</a></li>
         <li><a href="/profila">Profila</a></li>
     </ul>
 </nav>

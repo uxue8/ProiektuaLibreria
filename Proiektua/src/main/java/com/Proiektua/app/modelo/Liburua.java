@@ -46,8 +46,8 @@ public class Liburua {
 	
 	@ManyToMany
 	private List<Erabiltzaileak> erabiltzailea;
-	@Lob
-    private byte[] irudia;
+	@Column
+    private String irudia;
 	
 	public Liburua() {}
 
@@ -56,7 +56,7 @@ public class Liburua {
 
 	
 	public Liburua(int id, String izenburua, String egilea, int stock, Editoriala id_editoriala, double prezioa,
-			byte[] irudia) {
+			String irudia) {
 		this.id = id;
 		this.izenburua = izenburua;
 		this.egilea = egilea;
