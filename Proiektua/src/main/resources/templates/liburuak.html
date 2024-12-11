@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liburuen Zerrenda</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Liburuen Zerrenda</h1>
+    </header>
+    <main>
+        <div class="books-container">
+            <!-- Iterar sobre los libros desde la base de datos -->
+            <th:block th:each="liburua : ${liburuak}">
+                <div class="book-card">
+                    <img th:src="@{/images/} + ${liburua.irudia}" alt="Irudia" class="book-image">
+                    <h2 class="book-title" th:text="${liburua.izenburua}">Izenburua</h2>
+                    <p class="book-author" th:text="'Egilea: ' + ${liburua.egilea}">Egilea</p>
+                    <p class="book-price" th:text="'Prezioa: ' + ${liburua.prezioa} + '€'">Prezioa</p>
+                </div>
+            </th:block>
+        </div>
+    </main>
+</body>
+</html>

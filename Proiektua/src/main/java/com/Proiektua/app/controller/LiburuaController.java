@@ -31,6 +31,13 @@ public class LiburuaController {
 	@Autowired
 	private EditorialaRepository ediRepo;
 	
+	
+ //  @GetMapping("/liburuak")
+  // public String liburuIkusi(Model model) {
+	   
+//	   
+  // }
+	
    @GetMapping("/liburuaGehitu")
    public String LiburuaForm(Model model){
 	   List<Editoriala> editoriales = ediRepo.findAll();
@@ -40,23 +47,27 @@ public class LiburuaController {
    }
    
    @PostMapping("/liburuaGehitu/add")
-   public String gehitu(@ModelAttribute("liburua") Liburua liburua,@RequestParam("irudia") MultipartFile irudia) {
+   public String gehitu(@ModelAttribute("liburua") Liburua liburua,@RequestParam("file") MultipartFile irudia) {
 	   
 	   
 	   try {
-           if (!irudia.isEmpty()) {
-               Path directorioImagen= Paths.get("src//main//resources//static//images");
-               String rutaAbsoluta=directorioImagen.toFile().getAbsolutePath();
-               byte[] bytesImg= irudia.getBytes();
-               Path rutaCompleta = Paths.get(rutaAbsoluta+"//"+irudia.getOriginalFilename());
-               Files.write(rutaCompleta,bytesImg);
-               liburua.setIrudia(irudia.getOriginalFilename());
-               libuRepo.save(liburua);
-           }
+		   if (!irudia.isEmpty()) {
+	            // Ruta del directorio donde guardar las imágenes
+	            Path directorioImagen = Paths.get("src//main//resources//static/images");
+	            String rutaAbsoluta = directorioImagen.toFile().getAbsolutePath();
 
-          
+	            // Guardar archivo en el directorio
+	            byte[] bytesImg = irudia.getBytes();
+	            Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + irudia.getOriginalFilename());
+	            Files.write(rutaCompleta, bytesImg);
 
-           return "redirect:/liburuaGehitu"; // O cualquier vista que prefieras
+	            // Asignar el nombre del archivo al atributo 'irudia' en el modelo
+	            liburua.setIrudia(irudia.getOriginalFilename());
+	        }
+
+	        // Guardar el objeto liburua en el repositorio
+	        libuRepo.save(liburua);
+	        return "redirect:/liburuaGehitu"; // Redireccionar después de guardar
        } catch (IOException e) {
            e.printStackTrace();
            return "error";  // Si ocurre un error, mostramos una página de error
@@ -64,6 +75,8 @@ public class LiburuaController {
   
    
    }
+   
+   
 }
 
    
