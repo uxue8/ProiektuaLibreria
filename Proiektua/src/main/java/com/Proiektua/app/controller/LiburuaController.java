@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Proiektua.app.modelo.Editoriala;
+import com.Proiektua.app.modelo.Erabiltzaileak;
 import com.Proiektua.app.modelo.Liburua;
 import com.Proiektua.app.repository.EditorialaRepository;
 import com.Proiektua.app.repository.LiburuaRepository;
@@ -32,11 +33,14 @@ public class LiburuaController {
 	private EditorialaRepository ediRepo;
 	
 	
- //  @GetMapping("/liburuak")
-  // public String liburuIkusi(Model model) {
+	@GetMapping("/liburuak")
+   public String liburuIkusi(Model model) {
+		 List<Liburua> erabiltzaileakList = libuRepo.findAll();
+	        model.addAttribute("liburuak", erabiltzaileakList);
+		
+		return "liburuak";
 	   
-//	   
-  // }
+   }
 	
    @GetMapping("/liburuaGehitu")
    public String LiburuaForm(Model model){
