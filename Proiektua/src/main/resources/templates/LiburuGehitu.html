@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Añadir un Nuevo Libro</h1>
-    <form  action="#" th:action="@{/liburuaGehitu/add}" th:object="${liburua}" method="post" enctype="multipart/form-data">
+    <form   th:action="@{/liburuaGehitu/add}" th:object="${liburua}" method="post" enctype="multipart/form-data">
         <label for="izenburua">Título:</label>
         <input type="text" id="izenburua" th:field="*{izenburua}" required><br>
 
