@@ -20,6 +20,13 @@
                     <p class="book-author" th:text="'Egilea: ' + ${liburua.egilea}">Egilea</p>
 					
                     <p class="book-price" th:text="'Prezioa: ' + ${liburua.prezioa} + '€'">Prezioa</p>
+					
+					<form th:action="@{/comprar}"  th:object="${liburua}" method="post">
+						<input type="hidden" name="id" th:value="${liburua.id}">
+						   <label for="cantidad-${liburua.id}">Cantidad:</label>
+						   <input type="number" id="cantidad-${liburua.id}" name="cantidad" min="1" value="1">
+						   <button class="buy-button">Comprar</button>
+					</form>
                 </div>
             </th:block>
         </div>

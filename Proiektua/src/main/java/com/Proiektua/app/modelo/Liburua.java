@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.print.attribute.standard.Media;
 
+import org.hibernate.annotations.Check;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.CascadeType;
@@ -22,6 +23,7 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
+@Check(constraints = "prezioa >= 0 AND stock >= 0")
 public class Liburua {
 	
 	
@@ -46,6 +48,7 @@ public class Liburua {
 	
 	@ManyToMany
 	private List<Erabiltzaileak> erabiltzailea;
+	
 	@Column
     private String irudia;
 	

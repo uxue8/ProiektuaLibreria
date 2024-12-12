@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+    <link rel="stylesheet" th:href="@{/css/carrito.css}">
+</head>
+<body>
+    <header>
+        <h1>Tu Carrito de Compras</h1>
+    </header>
+    <main>
+        <section class="cart-items">
+            <h2>Libros en tu carrito</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Libro</th>
+                        <th>Autor</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <th:block th:each="liburua : ${cesta.liburu_erosita}">
+                        <tr>
+                            <td><img th:src="@{/images/} + ${liburua.irudia}" alt="Imagen del libro" class="book-image"></td>
+                            <td th:text="${liburua.izenburua}">Título</td>
+                            <td th:text="${liburua.egilea}">Autor</td>
+                            <td th:text="${liburua.prezioa} + '€'">Precio</td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+            <h3 th:text="'Precio Total: ' + ${cesta.prezio_totala} + '€'"></h3>
+        </section>
+
+		<section class="shipping-address">
+		    <h2>Dirección de Envío</h2>
+		    <form th:action="@{/guardarDireccion}" th:object="${helbidea}" method="post">
+		        <div class="form-group">
+		            <label for="kalea">Calle:</label>
+		            <input type="text" id="kalea"  th:field="*{kalea}" required>
+		        </div>
+		        <div class="form-group">
+		            <label for="hiria">Ciudad:</label>
+		            <input type="text" id="hiria"  th:field="*{hiria}" required>
+		        </div>
+		        <div class="form-group">
+		            <label for="posta_kodea">Código Postal:</label>
+		            <input type="text" id="posta_kodea" th:field="*{posta_kodea}" required>
+		        </div>
+		        <button type="submit">Guardar Dirección</button>
+		    </form>
+		</section>
+    </main>
+</body>
+</html>

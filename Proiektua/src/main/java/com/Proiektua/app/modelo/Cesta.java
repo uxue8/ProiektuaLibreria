@@ -1,5 +1,6 @@
 package com.Proiektua.app.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -22,7 +23,7 @@ public class Cesta {
 	private int id;
 	
 	@ManyToMany
-	private List<Liburua> liburu_erosita;
+	private ArrayList<Liburua> liburu_erosita;
 	
 	@ElementCollection
 	private List <Helbidea> helbidea;
@@ -34,19 +35,30 @@ public class Cesta {
 	public Cesta() {
 	}
 
-	public Cesta(int id, List<Liburua> liburu_erosita, List<Helbidea> helbidea, double prezio_totala) {
+	public Cesta(int id, ArrayList<Liburua> liburu_erosita, List<Helbidea> helbidea, double prezio_totala) {
 
 		this.id = id;
 		this.liburu_erosita = liburu_erosita;
 		this.helbidea = helbidea;
 		this.prezio_totala = prezio_totala;
 	}
-
+	
+	
 	@Override
 	public String toString() {
-		return "Cesta [id=" + id + ", liburu_erosita=" + liburu_erosita + ", helbidea=" + helbidea + ", prezio_totala="
-				+ prezio_totala + "]";
+	    return "Cesta{" +
+	           "id=" + id +
+	           ", liburu_erosita=" + (liburu_erosita != null ? liburu_erosita.size() + " libros" : "null") +
+	           ", prezio_totala=" + prezio_totala +
+	           '}';
 	}
+	public Cesta(int id,ArrayList<Liburua> liburu_erosita) {
+
+		this.id = id;
+		this.liburu_erosita = liburu_erosita;
+	}
+	
+	
 	
 	
 	

@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,9 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Proiektua.app.modelo.Cesta;
 import com.Proiektua.app.modelo.Editoriala;
-import com.Proiektua.app.modelo.Erabiltzaileak;
 import com.Proiektua.app.modelo.Liburua;
+import com.Proiektua.app.repository.CestaRepository;
 import com.Proiektua.app.repository.EditorialaRepository;
 import com.Proiektua.app.repository.LiburuaRepository;
 
@@ -31,6 +34,11 @@ public class LiburuaController {
 	
 	@Autowired
 	private EditorialaRepository ediRepo;
+	
+	@Autowired
+	private CestaRepository cesRepo;
+	
+	private ArrayList<Liburua> liburu_erosita = new ArrayList<>();
 	
 	
 	@GetMapping("/liburuak")
@@ -78,6 +86,41 @@ public class LiburuaController {
        }
   
    
+   }
+   
+   @PostMapping("/comprar")
+   public String comprar(@ModelAttribute("liburua")Liburua liburua,@RequestParam Long id, @RequestParam int cantidad) {
+       // Lógica para procesar la compra con el ID y la cantidad del libro
+	    
+    
+       
+       Optional<Liburua> libu= libuRepo.findById(liburua.getId());
+    
+       System.out.println("Libro ID: " + id + ", Cantidad: " + cantidad+libu.get());
+       
+       Cesta ce = new Cesta();
+          if(cantidad>1) {
+        	  for(int i=0; i<cantidad; i++) {
+        		  
+        		   liburu_erosita.add(libu.get());
+        		   
+        		  
+        		   
+        		   
+        	  }
+        	  ce.setLiburu_erosita(liburu_erosita);
+        	  cesRepo.save(ce);
+        	         	  
+          }else {
+        	  
+        	   liburu_erosita.add(libu.get());
+        	   ce.setLiburu_erosita(liburu_erosita);
+        	   cesRepo.save(ce);
+          }
+   
+      
+       
+       return "redirect:/liburuak";
    }
    
    
