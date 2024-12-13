@@ -11,28 +11,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.Proiektua.app.modelo.Erabiltzaileak;
 import com.Proiektua.app.repository.ErabiltzaileaRepository;
 
-
 @Controller
 public class ErregistroController {
-	
+
 	@Autowired
 	private ErabiltzaileaRepository erabRepo;
 	@Autowired
 	private PasswordEncoder passwordencoder;
-	  @GetMapping("/erregistro")
-	    public String erregistroFormulario(Model model) {
-	        
-	        model.addAttribute("erabiltzailea", new Erabiltzaileak());
-	        return "FormErabiltzaile"; 
-	    }
-	  
-	  @PostMapping("/erregistro/erregistratu")
-	  public String erregistratu(@ModelAttribute Erabiltzaileak erabiltzailea) {
-		  erabiltzailea.setPasahitza(passwordencoder.encode(erabiltzailea.getPasahitza()));
-			 
-		  erabRepo.save(erabiltzailea);
-		  
-		    return"redirect:/logina";
-		    
-	  }
+
+	@GetMapping("/erregistro")
+	public String erregistroFormulario(Model model) {
+		model.addAttribute("tipo", "erregistro");
+		model.addAttribute("erabiltzailea", new Erabiltzaileak());
+		return "FormErabiltzaile";
+	}
+
+	@PostMapping("/erregistro/erregistratu")
+	public String erregistratu(@ModelAttribute Erabiltzaileak erabiltzailea) {
+		erabiltzailea.setPasahitza(passwordencoder.encode(erabiltzailea.getPasahitza()));
+		erabiltzailea.setAdmin(0);
+		erabRepo.save(erabiltzailea);
+		
+		return "redirect:/logina";
+
+	}
 }

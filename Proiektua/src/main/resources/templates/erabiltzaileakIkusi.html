@@ -28,11 +28,11 @@
                 <td th:text="${erabiltzailea.admin}"></td>
 				<td>
 							                <!-- Botón para editar -->
-							                <a th:href="@{/erabiltzaileak/edit/{id}(id=${erabiltzailea.id})}">
+							                <a th:href="@{/erabiltzaileak/admin/edit/{id}(id=${erabiltzailea.id})}">
 							                    <button>Editar</button>
 							                </a>
 							                <!-- Botón para eliminar -->
-							                <a th:href="@{/erabiltzaileak/delete/{id}(id=${erabiltzailea.id})}">
+							                <a th:href="@{/erabiltzaileak/admin/delete/{id}(id=${erabiltzailea.id})}">
 							                    <button>Eliminar</button>
 							                </a>
 		       </td>

@@ -28,13 +28,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
        
    
-        Optional<Erabiltzaileak> userOpt = erabRepo.findByEmail(username);
-       
+        Optional<Erabiltzaileak> userOpt = erabRepo.findByEmail(email);
+        System.out.println(userOpt);
         if (userOpt.isEmpty()) {
-            throw new UsernameNotFoundException("Usuario no encontrado con email: " + username);
+            throw new UsernameNotFoundException("Usuario no encontrado con email: " + email);
         }
 
         Erabiltzaileak erabiltzailea = userOpt.get();

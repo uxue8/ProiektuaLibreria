@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,13 +27,20 @@ public class LoginController {
 
 	@GetMapping("/logina")
 	public String logina(Model model) {
-
-		model.addAttribute("erabiltzaileak", new Erabiltzaileak());
-
-		model.addAttribute("loginError", false);
 		return "Logina";
 	}
-
+	
+	@GetMapping("/loginaOndo")
+	public String loginaOndo(Model model) {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String rol = userDetails.getAuthorities().stream().findFirst().map(auth -> auth.getAuthority()).orElse(null);
+		model.addAttribute("rola", rol);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		Optional<Erabiltzaileak> erab = erabRepo.findByEmail(email);
+		model.addAttribute("erabiltzailea", erab);
+		return "index";
+	}
 	@GetMapping("/encriptar-contraseñas")
 	public String encriptarContraseñas() {
 		// Obtener todos los usuarios

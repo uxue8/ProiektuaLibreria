@@ -12,36 +12,51 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-	/*
-	 * private final UserDetailsServiceImpl userDetailsService;
-	 * 
-	 * public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
-	 * this.userDetailsService = userDetailsService; }
-	 */
+	private final UserDetailsServiceImpl userDetailsService;
 
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/liburuaGehitu/**", "/css/**", "/images/**", "/logina/**", "/erregistro/**",
-						"/erabiltzaileak/**", "/liburuak", "/comprar", "/carrito", "/encriptar-contraseñas")
-				.permitAll()
-				// Admin 1
-				// .requestMatchers("/liburua-gehitu", "/ikusi-salmentak").hasRole("1")
-				// User 0
-				// .requestMatchers("/carrito").hasRole("0")
-				.anyRequest().authenticated()).formLogin(form -> form.loginPage("/logina") // Ruta personalizada para el
-																							// formulario de login
-						.defaultSuccessUrl("/index", true) // Página tras inicio de sesión exitoso
-						.failureUrl("/logina?error=true") // Página tras un fallo en el login
-						.permitAll())
-				.logout(logout -> logout.logoutSuccessUrl("/").permitAll());
-
-		return http.build();
+	public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
+		this.userDetailsService = userDetailsService;
 	}
 
 	@Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	    http.authorizeHttpRequests(auth -> auth
+	            .requestMatchers(
+	                "/liburuaGehitu/**", 
+	                "/css/**", 
+	                "/images/**", 
+	                "/logina/**", 
+	                "/erregistro/**",
+	                "/liburuak", 
+	                "/comprar", 
+	                "/carrito", 
+	                "/encriptar-contraseñas"
+	            ).permitAll()
+	            .requestMatchers(
+	            	"/erabiltzaileak/admin/**"
+	            ).hasRole("1")
+	            .anyRequest().authenticated()
+	    )
+	    .formLogin(login -> login
+	            .loginPage("/logina") // Página de inicio de sesión personalizada
+	            .usernameParameter("email") // Configura 'email' como username
+	            .passwordParameter("password") // Configura el campo de contraseña
+	            .defaultSuccessUrl("/loginaOndo", true) // Redirección tras inicio exitoso
+	            .failureUrl("/logina?error=true") // Redirección tras fallo
+	            .permitAll()
+	    )
+	    .logout(logout -> logout
+	            .logoutSuccessUrl("/logina")
+	            .permitAll()
+	    );
+
+	    return http.build();
+	}
+
+
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 }
