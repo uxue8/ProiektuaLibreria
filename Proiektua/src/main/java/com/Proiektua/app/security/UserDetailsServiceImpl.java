@@ -1,9 +1,10 @@
-/*package com.Proiektua.app.security;
+package com.Proiektua.app.security;
 
 
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,20 +21,33 @@ import com.Proiektua.app.repository.ErabiltzaileaRepository;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private ErabiltzaileaRepository erabiltzaileaRepository;
+    private final ErabiltzaileaRepository erabRepo;
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Erabiltzaileak erabiltzailea = erabiltzaileaRepository.findByEmail(email)
-            .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
-
-        Collection<GrantedAuthority> authorities = Collections.singletonList(
-            new SimpleGrantedAuthority("ROLE_" + String.valueOf(erabiltzailea.getAdmin()))
-        );
-
-        return new User(erabiltzailea.getEmail(), erabiltzailea.getPasahitza(), authorities);
+    public UserDetailsServiceImpl(ErabiltzaileaRepository erabRepo) {
+        this.erabRepo = erabRepo;
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+       
+   
+        Optional<Erabiltzaileak> userOpt = erabRepo.findByEmail(username);
+       
+        if (userOpt.isEmpty()) {
+            throw new UsernameNotFoundException("Usuario no encontrado con email: " + username);
+        }
 
-}*/
+        Erabiltzaileak erabiltzailea = userOpt.get();
+       
+        // Crea un SimpleGrantedAuthority para el rol del usuario
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(Integer.toString(erabiltzailea.getAdmin()));
+
+        System.out.println(authority);
+       
+        return new User(
+                erabiltzailea.getEmail(),   // Email como nombre de usuario
+                erabiltzailea.getPasahitza(),  // Contraseña encriptada
+                Collections.singletonList(authority)  // Lista de roles/authorities
+        );
+    }
+}

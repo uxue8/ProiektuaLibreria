@@ -9,7 +9,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,7 +25,7 @@ public class Cesta {
 	private int id;
 	
 	@ManyToMany
-	private ArrayList<Liburua> liburu_erosita;
+	private List<Liburua> liburu_erosita;
 	
 	@ElementCollection
 	private List <Helbidea> helbidea;
@@ -31,6 +33,12 @@ public class Cesta {
 	
 	@Column
 	private double prezio_totala;
+	
+	 @OneToOne
+	 @JoinColumn(name = "erabiltzailea_id") 
+	 private Erabiltzaileak erabiltzailea;
+	
+	
 	
 	public Cesta() {
 	}

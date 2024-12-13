@@ -22,20 +22,22 @@
                         <th>Precio</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <th:block th:each="liburua : ${cesta.liburu_erosita}">
-                        <tr>
-                            <td><img th:src="@{/images/} + ${liburua.irudia}" alt="Imagen del libro" class="book-image"></td>
-                            <td th:text="${liburua.izenburua}">Título</td>
-                            <td th:text="${liburua.egilea}">Autor</td>
-                            <td th:text="${liburua.prezioa} + '€'">Precio</td>
-                        </tr>
-                    </th:block>
-                </tbody>
+				<tbody>
+				
+				    <th:block th:each="cesta : ${cestak}">
+				        <th:block th:each="liburua : ${cesta.liburu_erosita}">
+				            <tr>
+				                <td><img th:src="@{/images/} + ${liburua.irudia}" alt="Imagen del libro" class="book-image"></td>
+				                <td th:text="${liburua.izenburua}">Título</td>
+				                <td th:text="${liburua.egilea}">Autor</td>
+				                <td th:text="${liburua.prezioa} + '€'">Precio</td>
+				            </tr>
+				        </th:block>
+						<h3 th:text="'Precio Total: ' + ${cesta.prezio_totala} + '€'"></h3>
+				    </th:block>
             </table>
-            <h3 th:text="'Precio Total: ' + ${cesta.prezio_totala} + '€'"></h3>
+           
         </section>
-
 		<section class="shipping-address">
 		    <h2>Dirección de Envío</h2>
 		    <form th:action="@{/guardarDireccion}" th:object="${helbidea}" method="post">

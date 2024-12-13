@@ -38,7 +38,7 @@ public class LiburuaController {
 	@Autowired
 	private CestaRepository cesRepo;
 	
-	private ArrayList<Liburua> liburu_erosita = new ArrayList<>();
+	private List<Liburua> liburu_erosita = new ArrayList<>();
 	
 	
 	@GetMapping("/liburuak")

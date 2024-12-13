@@ -1,11 +1,13 @@
 package com.Proiektua.app.modelo;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +35,8 @@ public class Erabiltzaileak {
 		@Column
 		private int admin;
 		
+		@OneToOne(mappedBy = "erabiltzailea", cascade = CascadeType.ALL)
+	    private Cesta cesta;
 		
 		public Erabiltzaileak() {}
 
