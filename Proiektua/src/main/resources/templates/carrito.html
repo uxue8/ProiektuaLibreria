@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito</title>
     <link rel="stylesheet" th:href="@{/css/carrito.css}">
+	<link rel="stylesheet" th:href="@{/css/navbar.css}">
 </head>
 <body>
     <header>
+		<div th:replace="fragments/navbar :: navbar"></div>
         <h1>Tu Carrito de Compras</h1>
     </header>
     <main>
         <section class="cart-items">
             <h2>Libros en tu carrito</h2>
+			<a th:href="@{/carrito/vaciar}">Vaciar carrito</a>
             <table>
                 <thead>
                     <tr>
@@ -39,6 +42,17 @@
            
         </section>
 		<section class="shipping-address">
+			<!-- Mostrar dirección existente -->
+			    <div th:if="${!#lists.isEmpty(helbideak)}">
+			        <h3>Direcciones guardadas:</h3>
+			        <ul>
+			            <li th:each="direccion : ${helbideak}">
+			                <p><strong>Calle:</strong> <span th:text="${direccion.kalea}"></span></p>
+			                <p><strong>Ciudad:</strong> <span th:text="${direccion.hiria}"></span></p>
+			                <p><strong>Código Postal:</strong> <span th:text="${direccion.posta_kodea}"></span></p>
+			            </li>
+			        </ul>
+			    </div>
 		    <h2>Dirección de Envío</h2>
 		    <form th:action="@{/guardarDireccion}" th:object="${helbidea}" method="post">
 		        <div class="form-group">

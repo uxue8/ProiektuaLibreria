@@ -77,3 +77,50 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+/* Contenedor principal de la dirección actual */
+.shipping-address {
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.shipping-address h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #007BFF;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+/* Lista de direcciones */
+.shipping-address ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.shipping-address li {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.shipping-address li p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 1em;
+}
+
+.shipping-address li p strong {
+    color: #333;
+    font-weight: bold;
+}
+

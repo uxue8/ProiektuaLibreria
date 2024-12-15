@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Registro de Usuario</title>
+	<link rel="stylesheet" th:href="@{/css/navbar.css}">
 	<link rel="stylesheet" th:href="@{/css/erregistro.css}">
 </head>
 
@@ -30,11 +31,11 @@
 				<input type="email" id="email" name="email" th:field="${erabiltzailea.email}" required>
 			</div>
 			<div th:if="${tipo} == 'ikusi'">
-			    <input type="hidden" id="passwordActual" th:field="${erabiltzailea.pasahitza}" />
+				<input type="hidden" id="passwordActual" th:field="${erabiltzailea.pasahitza}" />
 			</div>
 			<div th:if="${tipo} == 'erregistro'">
-			    <label for="pasahitza">Contraseña:</label>
-			    <input type="password" id="pasahitza" name="pasahitza" th:field="${erabiltzailea.pasahitza}" />
+				<label for="pasahitza">Contraseña:</label>
+				<input type="password" id="pasahitza" name="pasahitza" th:field="${erabiltzailea.pasahitza}" />
 			</div>
 			<div class="form-group">
 				<label for="tel_zenbakia">Teléfono:</label>
@@ -60,6 +61,7 @@
 
 			<button type="submit" th:if="${tipo} == 'ikusi'"><span>Edit</span> </button>
 			<button type="submit" th:if="${tipo} == 'erregistro'"><span>Erregistratu</span> </button>
+			<a class="itzuliBtn" th:href="@{/loginaOndo}">Itzuli</a>
 		</form>
 	</div>
 </body>

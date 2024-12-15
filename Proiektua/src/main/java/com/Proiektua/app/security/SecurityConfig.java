@@ -20,39 +20,22 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	    http.authorizeHttpRequests(auth -> auth
-	            .requestMatchers(
-	                "/liburuaGehitu/**", 
-	                "/css/**", 
-	                "/images/**", 
-	                "/logina/**", 
-	                "/erregistro/**",
-	                "/liburuak", 
-	                "/comprar", 
-	                "/carrito", 
-	                "/encriptar-contraseñas"
-	            ).permitAll()
-	            .requestMatchers(
-	            	"/erabiltzaileak/admin/**"
-	            ).hasRole("1")
-	            .anyRequest().authenticated()
-	    )
-	    .formLogin(login -> login
-	            .loginPage("/logina") // Página de inicio de sesión personalizada
-	            .usernameParameter("email") // Configura 'email' como username
-	            .passwordParameter("password") // Configura el campo de contraseña
-	            .defaultSuccessUrl("/loginaOndo", true) // Redirección tras inicio exitoso
-	            .failureUrl("/logina?error=true") // Redirección tras fallo
-	            .permitAll()
-	    )
-	    .logout(logout -> logout
-	            .logoutSuccessUrl("/logina")
-	            .permitAll()
-	    );
+		http.authorizeHttpRequests(auth -> auth
+				.requestMatchers("/liburuaGehitu/**", "/css/**", "/images/**", "/logina/**", "/erregistro/**", "/encriptar-contraseñas").permitAll()
+				.requestMatchers("/erabiltzaileak/admin/**", "/liburuaGehitu/**", "/editorialak/admin/**", "/admin/liburuak").hasRole("ADMIN")
+				.requestMatchers("/carrito", "/liburuak","/comprar").hasRole("USER")
 
-	    return http.build();
+				.anyRequest().authenticated()).formLogin(login -> login.loginPage("/logina") // Página de inicio de
+																								// sesión personalizada
+						.usernameParameter("email") // Configura 'email' como username
+						.passwordParameter("password") // Configura el campo de contraseña
+						.defaultSuccessUrl("/loginaOndo", true) // Redirección tras inicio exitoso
+						.failureUrl("/logina?error=true") // Redirección tras fallo
+						.permitAll())
+				.logout(logout -> logout.logoutSuccessUrl("/logina").permitAll());
+
+		return http.build();
 	}
-
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {

@@ -2,10 +2,11 @@
 	<nav class="navbar">
 		<ul>
 			<li><a href="/loginaOndo">Hasiera</a></li>
-			<li><a href="/liburuak">Liburuak</a></li>
-			<li><a href="/liburuaGehitu" th:if="${rola == '1'}">Liburua Gehitu</a></li>
-			<li><a href="/erabiltzaileak/admin/ikusi" th:if="${rola == '1'}">Ikusi erabiltzaileak</a></li>
-			<li><a href="/carrito" th:if="${rola == '0'}">Carrito</a></li>
+			<li><a href="/liburuak" th:if="${rola == 'ROLE_USER'}">Liburuak</a></li>
+			<li><a href="/admin/liburuak" th:if="${rola == 'ROLE_ADMIN'}">Liburuak ikusi</a></li>
+			<li><a href="/erabiltzaileak/admin/ikusi" th:if="${rola == 'ROLE_ADMIN'}">Ikusi erabiltzaileak</a></li>
+			<li><a href="/editorialak/admin/gehitu" th:if="${rola == 'ROLE_ADMIN'}">Editorialak</a></li>
+			<li><a href="/carrito" th:if="${rola == 'ROLE_USER'}">Carrito</a></li>
 			<li><a href="/erabiltzaileak/perfila/ikusi">Profila</a></li>
 			<li>
 				<a href="#" onclick="document.getElementById('logout-form').submit();">Saioa itxi</a>

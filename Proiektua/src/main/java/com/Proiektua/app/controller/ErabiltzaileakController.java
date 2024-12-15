@@ -21,53 +21,60 @@ import com.Proiektua.app.repository.ErabiltzaileaRepository;
 @Controller
 @RequestMapping("/erabiltzaileak")
 public class ErabiltzaileakController {
-	
-	
-	 @Autowired
-	    private ErabiltzaileaRepository erabRepo;
 
-	    @GetMapping("/admin/ikusi")
-	    public String mostrarErabiltzaileak(Model model) {
-	        List<Erabiltzaileak> erabiltzaileakList = erabRepo.findAll();
-	        model.addAttribute("erabiltzaileak", erabiltzaileakList);
-	        return "erabiltzaileakIkusi";  
-	    }
-	    
-	    
-	    // Editar 
-	    @GetMapping("/admin/edit/{id}")
-	    public String editatuErab(@PathVariable int id,Model model){
-	    	
-	    	
-	    	model.addAttribute("erabiltzailea",  erabRepo.findById(id));
-	    	return "FormErabiltzaile";
-	    	
-	    }
-	    
-	    //ezabatu
-	   
-	    @GetMapping("/admin/delete/{id}")
-	    public String ezabatuErab(@PathVariable int id,Model model) {
-	    	     erabRepo.deleteById(id);
-	    	     return"redirect:/erabiltzaileak";
-	    }
+	@Autowired
+	private ErabiltzaileaRepository erabRepo;
 
-	    @GetMapping("/perfila/ikusi")
-	    public String ikusiPerfila(Model model) {
-			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String rol = userDetails.getAuthorities().stream().findFirst().map(auth -> auth.getAuthority()).orElse(null);
-			model.addAttribute("rola", rol);
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			String email = auth.getName();
-			Optional<Erabiltzaileak> erab = erabRepo.findByEmail(email);
-			model.addAttribute("erabiltzailea", erab);
-			model.addAttribute("tipo", "ikusi");
-			return "FormErabiltzaile";
-	    }
-	    
-	    @PostMapping("/perfila/ikusi")
-	    public String perfilaIkusi(@ModelAttribute("erabiltzailea") Erabiltzaileak erab) {
-	    	erabRepo.save(erab);
-	    	return "redirect:/loginaOndo";
-	    }
+	@GetMapping("/admin/ikusi")
+	public String mostrarErabiltzaileak(Model model) {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String rol = userDetails.getAuthorities().stream().findFirst().map(auth -> auth.getAuthority()).orElse(null);
+		model.addAttribute("rola", rol);
+		List<Erabiltzaileak> erabiltzaileakList = erabRepo.findAll();
+		model.addAttribute("erabiltzaileak", erabiltzaileakList);
+		return "erabiltzaileakIkusi";
+	}
+
+	// Editar
+	@GetMapping("/admin/edit/{id}")
+	public String editatuErab(@PathVariable int id, Model model) {
+		model.addAttribute("tipo", "ikusi");
+		model.addAttribute("erabiltzailea", erabRepo.findById(id));
+		return "FormErabiltzaile";
+
+	}
+
+	// ezabatu
+
+	@GetMapping("/admin/delete/{id}")
+	public String ezabatuErab(@PathVariable int id, Model model) {
+		erabRepo.deleteById(id);
+		return "redirect:/erabiltzaileak";
+	}
+
+	@GetMapping("/perfila/ikusi")
+	public String ikusiPerfila(Model model) {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String rol = userDetails.getAuthorities().stream().findFirst().map(auth -> auth.getAuthority()).orElse(null);
+		model.addAttribute("rola", rol);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		Optional<Erabiltzaileak> erab = erabRepo.findByEmail(email);
+		model.addAttribute("erabiltzailea", erab);
+		model.addAttribute("tipo", "ikusi");
+		return "FormErabiltzaile";
+	}
+
+	@PostMapping("/perfila/ikusi")
+	public String perfilaIkusi(@ModelAttribute("erabiltzailea") Erabiltzaileak erab, Model model) {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String rol = userDetails.getAuthorities().stream().findFirst().map(auth -> auth.getAuthority()).orElse(null);
+		if (rol.equals("ROLE_ADMIN")) {
+			erab.setAdmin(1);
+		} else {
+			erab.setAdmin(0);
+		}
+		erabRepo.save(erab);
+		return "redirect:/erabiltzaileak/admin/ikusi";
+	}
 }

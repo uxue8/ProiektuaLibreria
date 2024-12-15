@@ -1,0 +1,78 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* Títulos */
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Estilo para la tabla */
+.liburua-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.liburua-table th, .liburua-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.liburua-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.liburua-table td {
+    background-color: #f9f9f9;
+}
+
+.liburua-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilo para las imágenes */
+.book-image {
+    width: 50px;
+    height: 75px;
+    object-fit: cover;
+}
+
+/* Estilo para los botones */
+.btn {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    margin: 5px;
+    font-weight: bold;
+}
+
+.btn.edit {
+    background-color: #4CAF50;
+}
+
+.btn.delete {
+    background-color: #f44336;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}

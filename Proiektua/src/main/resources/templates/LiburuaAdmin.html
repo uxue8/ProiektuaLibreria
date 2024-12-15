@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gestionar Liburuak</title>
+	<link rel="stylesheet" th:href="@{/css/navbar.css}">
+	<link rel="stylesheet" th:href="@{/css/liburuakAdmin.css}">
+</head>
+
+<body>
+	<div th:replace="fragments/navbar :: navbar"></div>
+	<div class="container">
+		<h1>Gestionar Liburuak</h1>
+		<a th:href="@{/liburuaGehitu}" class="btn edit">Liburua Gehitu</a>
+
+		<!-- Tabla de libros -->
+		<h2>Listado de Libros</h2>
+		<table class="liburua-table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Título</th>
+					<th>Autor</th>
+					<th>Editorial</th>
+					<th>Precio</th>
+					<th>Imagen</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="liburua : ${liburuak}">
+					<td th:text="${liburua.id}"></td>
+					<td th:text="${liburua.izenburua}"></td>
+					<td th:text="${liburua.egilea}"></td>
+					<td th:text="${liburua.id_editoriala.izena}"></td>
+					<td th:text="${liburua.prezioa} + ' €'"></td>
+					<td><img th:src="@{'/images/' + ${liburua.irudia}}" alt="Imagen del libro" class="book-image"></td>
+					<td>
+						<a th:href="@{/liburua/editatu/{id}(id=${liburua.id})}" class="btn edit">Editar</a>
+						<a th:href="@{/liburua/ezabatu/{id}(id=${liburua.id})}" class="btn delete">Borrar</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>

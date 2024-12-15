@@ -13,6 +13,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
@@ -23,64 +25,49 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-@Check(constraints = "prezioa >= 0 AND stock >= 0")
+@Check(constraints = "prezioa >= 0")
 public class Liburua {
-	
-	
-	 @Id
-	 @GeneratedValue(strategy=GenerationType.IDENTITY)
-	 private int id;
-	 
-	@Column 
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
+	@Column
 	private String izenburua;
-	
-	@Column 
+
+	@Column
 	private String egilea;
-	
-	@Column 
-	private int stock;
-	
+
 	@ManyToOne
 	private Editoriala id_editoriala;
-	
-	@Column 
-    private double prezioa;
-	
-	@ManyToMany
-	private List<Erabiltzaileak> erabiltzailea;
-	
+
 	@Column
-    private String irudia;
-	
-	public Liburua() {}
+	private double prezioa;
 
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "liburua_erabiltzailea", joinColumns = @JoinColumn(name = "liburua_id"), inverseJoinColumns = @JoinColumn(name = "erabiltzailea_id"))
 
+	private List<Erabiltzaileak> erabiltzailea;
 
+	@Column
+	private String irudia;
 
-	
-	public Liburua(int id, String izenburua, String egilea, int stock, Editoriala id_editoriala, double prezioa,
-			String irudia) {
+	public Liburua() {
+	}
+
+	public Liburua(int id, String izenburua, String egilea, Editoriala id_editoriala, double prezioa, String irudia) {
 		this.id = id;
 		this.izenburua = izenburua;
 		this.egilea = egilea;
-		this.stock = stock;
 		this.id_editoriala = id_editoriala;
 		this.prezioa = prezioa;
-		this.irudia =  irudia;
+		this.irudia = irudia;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Liburua [id=" + id + ", izenburua=" + izenburua + ", egilea=" + egilea + ", stock=" + stock
-				+ ", id_editoriala=" + id_editoriala + ", prezioa=" + prezioa + "]";
+		return "Liburua [id=" + id + ", izenburua=" + izenburua + ", egilea=" + egilea + ", id_editoriala="
+				+ id_editoriala + ", prezioa=" + prezioa + "]";
 	}
-
-
-	
-	
-	
-	
-	
-	 
 
 }
