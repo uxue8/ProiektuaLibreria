@@ -36,7 +36,7 @@ h1, h2 {
 }
 
 .liburua-table th {
-    background-color: #4CAF50;
+    background-color:  #007bff;;
     color: white;
 }
 
@@ -66,7 +66,7 @@ h1, h2 {
 }
 
 .btn.edit {
-    background-color: #4CAF50;
+    background-color:  #007bff;
 }
 
 .btn.delete {

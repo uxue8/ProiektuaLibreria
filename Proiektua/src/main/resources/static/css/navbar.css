@@ -38,9 +38,8 @@
     font-size: 1.2rem;
     font-weight: bold;
     padding: 12px 25px;
-    border-radius: 50px;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+   
 }
 
 .navbar li a:hover {

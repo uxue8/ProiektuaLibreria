@@ -1,9 +1,8 @@
 <div th:fragment="navbar">
 	<nav class="navbar">
 		<ul>
-			<li><a href="/loginaOndo">Hasiera</a></li>
-			<li><a href="/liburuak" th:if="${rola == 'ROLE_USER'}">Liburuak</a></li>
-			<li><a href="/admin/liburuak" th:if="${rola == 'ROLE_ADMIN'}">Liburuak ikusi</a></li>
+			<li><a href="/liburuak"th:if="${rola == 'ROLE_USER'}">Hasiera</a></li>
+			<li><a href="/admin/liburuak"th:if="${rola == 'ROLE_ADMIN'}">Hasiera</a></li>
 			<li><a href="/erabiltzaileak/admin/ikusi" th:if="${rola == 'ROLE_ADMIN'}">Ikusi erabiltzaileak</a></li>
 			<li><a href="/editorialak/admin/gehitu" th:if="${rola == 'ROLE_ADMIN'}">Editorialak</a></li>
 			<li><a href="/carrito" th:if="${rola == 'ROLE_USER'}">Carrito</a></li>

@@ -39,7 +39,12 @@ public class LoginController {
 		String email = auth.getName();
 		Optional<Erabiltzaileak> erab = erabRepo.findByEmail(email);
 		model.addAttribute("erabiltzailea", erab);
-		return "index";
+		if(rol.equalsIgnoreCase("ROLE_USER")) {
+			return "redirect:/liburuak";
+		}else {
+			return "redirect:/admin/liburuak";
+		}
+	
 	}
 	@GetMapping("/encriptar-contraseñas")
 	public String encriptarContraseñas() {
