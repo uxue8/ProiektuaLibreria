@@ -69,12 +69,15 @@ public class ErabiltzaileakController {
 	public String perfilaIkusi(@ModelAttribute("erabiltzailea") Erabiltzaileak erab, Model model) {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String rol = userDetails.getAuthorities().stream().findFirst().map(auth -> auth.getAuthority()).orElse(null);
-		if (rol.equals("ROLE_ADMIN")) {
-			erab.setAdmin(1);
-		} else {
-			erab.setAdmin(0);
-		}
+	    erab.setAdmin(0);	
 		erabRepo.save(erab);
-		return "redirect:/erabiltzaileak/admin/ikusi";
+		
+		if(rol.equalsIgnoreCase("ROLE_ADMIN")) {
+			return "redirect:/erabiltzaileak/admin/ikusi";
+		}else {
+			
+			return "redirect:/loginaOndo";
+		}
+	
 	}
 }

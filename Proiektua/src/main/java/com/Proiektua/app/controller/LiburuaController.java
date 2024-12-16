@@ -165,6 +165,24 @@ public class LiburuaController {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String rol = userDetails.getAuthorities().stream().findFirst().map(auth -> auth.getAuthority()).orElse(null);
 		model.addAttribute("rola", rol);
+		
+		List<Cesta> ces = cesRepo.findAll();
+		List<Liburua> libu = libuRepo.findAll();
+		
+		if(ces!=null) {
+		
+			for( Cesta c : ces) {
+				 for( Liburua li : c.getLiburu_erosita()) {
+					 int idLibu =li.getId();
+					 if(idLibu==id) {
+						 c.getLiburu_erosita().remove(idLibu);
+					 }
+					
+					 
+				 }
+				
+			}
+		}
 		libuRepo.deleteById(id);
 		return "redirect:/admin/liburuak";
 	}
