@@ -17,6 +17,10 @@
 	<main>
 		<div class="books-container">
 			<!-- Iterar sobre los libros desde la base de datos -->
+			<div class="hutsik" th:if="${#lists.isEmpty(liburuak)}">
+				<p> Ez dago libururik</p>
+
+			</div>
 			<th:block th:each="liburua : ${liburuak}">
 				<div class="book-card">
 					<img th:src="@{/images/} + ${liburua.irudia}" alt="Irudia" class="book-image">

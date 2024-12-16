@@ -160,28 +160,33 @@ public class LiburuaController {
 
 	@GetMapping("/liburua/ezabatu/{id}")
 	public String liburuaEzabatuAdmin(@PathVariable int id, Model model) {
-	    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    String rol = userDetails.getAuthorities().stream().findFirst().map(auth -> auth.getAuthority()).orElse(null);
-	    model.addAttribute("rola", rol);
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String rol = userDetails.getAuthorities().stream().findFirst().map(auth -> auth.getAuthority()).orElse(null);
+		model.addAttribute("rola", rol);
 
-	    List<Liburua> libu = libuRepo.findAll();
-	    List<Cesta> cesta = cesRepo.findAll();
+		List<Liburua> libu = libuRepo.findAll();
+		List<Cesta> cesta = cesRepo.findAll();
 
-	    for (Liburua liburua : libu) {
-	        if (liburua.getId() == id) {
-	            liburua.getErabiltzailea().clear();
+		for (Liburua liburua : libu) {
+			if (liburua.getId() == id) {
+				liburua.getErabiltzailea().clear();
 
-	            for (Cesta cesta2 : cesta) {
-	                if (cesta2.getLiburu_erosita().contains(liburua)) {
-	                    cesta2.getLiburu_erosita().remove(liburua); 
-	                }
-	            }
+		 		for (Cesta cesta2 : cesta) {
+					List<Liburua> librosAEliminar = new ArrayList<>();
+					for (Liburua libroEnCesta : cesta2.getLiburu_erosita()) {
+						if (libroEnCesta.equals(liburua)) {
+							librosAEliminar.add(libroEnCesta);
+							cesta2.setPrezio_totala(cesta2.getPrezio_totala() - liburua.getPrezioa());
+						}
+					}
+					cesta2.getLiburu_erosita().removeAll(librosAEliminar);
+				}
+			}
+		}
 
-	        }
-	    }
-	    libuRepo.deleteById(id);
+		libuRepo.deleteById(id);
 
-	    return "redirect:/admin/liburuak";
+		return "redirect:/admin/liburuak";
 	}
 
 }
