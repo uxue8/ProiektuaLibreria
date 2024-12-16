@@ -45,8 +45,6 @@ public class LiburuaController {
 	@Autowired
 	private ErabiltzaileaRepository erabRepo;
 
-//	private List<Liburua> liburu_erosita = new ArrayList<>();
-
 	@GetMapping("/liburuak")
 	public String liburuIkusi(Model model) {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -162,28 +160,28 @@ public class LiburuaController {
 
 	@GetMapping("/liburua/ezabatu/{id}")
 	public String liburuaEzabatuAdmin(@PathVariable int id, Model model) {
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String rol = userDetails.getAuthorities().stream().findFirst().map(auth -> auth.getAuthority()).orElse(null);
-		model.addAttribute("rola", rol);
-		
-		List<Cesta> ces = cesRepo.findAll();
-		List<Liburua> libu = libuRepo.findAll();
-		
-		if(ces!=null) {
-		
-			for( Cesta c : ces) {
-				 for( Liburua li : c.getLiburu_erosita()) {
-					 int idLibu =li.getId();
-					 if(idLibu==id) {
-						 c.getLiburu_erosita().remove(idLibu);
-					 }
-					
-					 
-				 }
-				
-			}
-		}
-		libuRepo.deleteById(id);
-		return "redirect:/admin/liburuak";
+	    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    String rol = userDetails.getAuthorities().stream().findFirst().map(auth -> auth.getAuthority()).orElse(null);
+	    model.addAttribute("rola", rol);
+
+	    List<Liburua> libu = libuRepo.findAll();
+	    List<Cesta> cesta = cesRepo.findAll();
+
+	    for (Liburua liburua : libu) {
+	        if (liburua.getId() == id) {
+	            liburua.getErabiltzailea().clear();
+
+	            for (Cesta cesta2 : cesta) {
+	                if (cesta2.getLiburu_erosita().contains(liburua)) {
+	                    cesta2.getLiburu_erosita().remove(liburua); 
+	                }
+	            }
+
+	        }
+	    }
+	    libuRepo.deleteById(id);
+
+	    return "redirect:/admin/liburuak";
 	}
+
 }
