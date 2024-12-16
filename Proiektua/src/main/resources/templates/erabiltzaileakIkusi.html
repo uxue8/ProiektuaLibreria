@@ -43,7 +43,7 @@
 						Editar
 					</a>
 					<!-- Botón para eliminar -->
-					<a class="btn" th:href="@{/erabiltzaileak/admin/delete/{id}(id=${erabiltzailea.id})}">
+					<a class="btn" th:href="@{/erabiltzaileak/admin/delete/{id}(id=${erabiltzailea.id})}" onclick="return confirm('¿Estás seguro de eliminar este libro?')">
 						Eliminar
 					</a>
 				</td>

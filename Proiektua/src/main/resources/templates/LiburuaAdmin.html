@@ -44,7 +44,7 @@
 					<td><img th:src="@{'/images/' + ${liburua.irudia}}" alt="Imagen del libro" class="book-image"></td>
 					<td>
 						<a th:href="@{/liburua/editatu/{id}(id=${liburua.id})}" class="btn edit">Editar</a>
-						<a th:href="@{/liburua/ezabatu/{id}(id=${liburua.id})}" class="btn delete">Borrar</a>
+						<a th:href="@{/liburua/ezabatu/{id}(id=${liburua.id})}" class="btn delete" onclick="return confirm('¿Estás seguro de eliminar este libro?')">Borrar</a>
 					</td>
 				</tr>
 			</tbody>
