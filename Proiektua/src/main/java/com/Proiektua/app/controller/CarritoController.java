@@ -57,29 +57,7 @@ public class CarritoController {
 		return "carrito";
 	}
 
-	@GetMapping("/carrito/vaciar")
-	public String vaciarCarrito() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
 
-		Erabiltzaileak erabiltzailea = erabRepo.findByEmail(email)
-				.orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
-
-		Cesta cesta = cesRepo.findByerabiltzailea(erabiltzailea);
-		List<Liburua> liburuGuztia = libuRepo.findByErabiltzailea(erabiltzailea);
-		for (Liburua liburua : liburuGuztia) {
-			
-			liburua.getErabiltzailea().remove(erabiltzailea);
-			libuRepo.save(liburua);
-		}
-		cesta.getLiburu_erosita().clear();
-		cesta.setPrezio_totala(0);
-		
-		cesRepo.save(cesta);
-		
-		
-		return "redirect:/carrito";
-	}
 
 	@PostMapping("/guardarDireccion")
 	public String guardarDireccion(@ModelAttribute Helbidea helbidea) {
