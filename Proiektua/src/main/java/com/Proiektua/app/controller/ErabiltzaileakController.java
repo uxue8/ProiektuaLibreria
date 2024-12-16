@@ -49,7 +49,7 @@ public class ErabiltzaileakController {
 	@GetMapping("/admin/delete/{id}")
 	public String ezabatuErab(@PathVariable int id, Model model) {
 		erabRepo.deleteById(id);
-		return "redirect:/erabiltzaileak";
+		return "redirect:/erabiltzaileak/admin/ikusi";
 	}
 
 	@GetMapping("/perfila/ikusi")

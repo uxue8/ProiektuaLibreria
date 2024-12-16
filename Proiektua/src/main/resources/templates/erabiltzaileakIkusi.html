@@ -20,10 +20,17 @@
 				<th>Email</th>
 				<th>Telefono</th>
 				<th>Admin</th>
+				<th>Acciones</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="erabiltzailea : ${erabiltzaileak}">
+			<!-- Mensaje cuando no hay usuarios con admin == 0 -->
+			<tr th:if="${#lists.isEmpty(erabiltzaileak) or erabiltzaileak.?[admin == 0].isEmpty()}">
+				<td class="hutsik" colspan="7" style="text-align: center;">Ez dago erabiltzailerik</td>
+			</tr>
+
+			<!-- Iteración para usuarios con admin == 0 -->
+			<tr th:each="erabiltzailea : ${erabiltzaileak}" th:if="${erabiltzailea.admin == 0}">
 				<td th:text="${erabiltzailea.id}"></td>
 				<td th:text="${erabiltzailea.izena}"></td>
 				<td th:text="${erabiltzailea.abizena}"></td>
@@ -41,7 +48,6 @@
 					</a>
 				</td>
 			</tr>
-
 		</tbody>
 	</table>
 </body>
